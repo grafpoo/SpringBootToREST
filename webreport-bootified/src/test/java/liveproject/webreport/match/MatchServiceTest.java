@@ -31,7 +31,7 @@ public class MatchServiceTest {
                 .halfTimeAwayGoals(0)
                 .halfTimeHomeGoals(4)
                 .referee(WINSTON_CHURCHILL)
-                .fullTimeResult(Match.Result.HOME_WIN)
+                .fullTimeResult('H')
                 .season(SEASON_STR)
                 .build();
         when(matchRepository.findBySeason(SEASON_STR)).thenReturn(Collections.singletonList(theGame));

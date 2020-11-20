@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>liveproject</groupId>
-    <artifactId>webreport-bootified</artifactId>
+    <artifactId>webreport</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>webreport-bootified</name>
-    <description>Demo project for Spring Boot</description>
+    <name>webreport</name>
+    <description>Web report using Spring Boot</description>
 
     <properties>
         <java.version>11</java.version>

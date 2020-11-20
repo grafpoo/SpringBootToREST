@@ -5,6 +5,7 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,20 @@ public class MatchService {
 	public Match save(Match match) {
 		matchRepository.save(match);
 		return match;
+	}
+
+	@Transactional
+	public Map<String, Integer> saveAll(List<Match> matches) {
+		Map<String, Integer> resultsBySeason = new HashMap<>();
+		for (Match m : matches) {
+			matchRepository.save(m);
+			String season = StringUtils.isEmpty(m.getSeason()) ? "UNKNOWN" : m.getSeason();
+			if (!resultsBySeason.containsKey(season)) {
+				resultsBySeason.put(season, 0);
+			}
+			resultsBySeason.put(season, 1+resultsBySeason.get(season));
+		}
+		return resultsBySeason;
 	}
 
 	public Season aggregateSeason(String seasonStr) {

@@ -25,29 +25,6 @@ import java.util.Objects;
 public class Match implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public enum Result {
-        HOME_WIN('H'), AWAY_WIN('A'), DRAW ('D'), UNK('X');
-
-//        @JsonValue
-        private char value;
-
-        Result(char value) { this.value = value; }
-
-        public char getValue() { return value; }
-
-        public static Result parse(char id) {
-            Result result = null; // Default
-            for (Result item : Result.values()) {
-                if (item.getValue()==id) {
-                    result = item;
-                    break;
-                }
-            }
-            return result;
-        }
-
-    };
-
     @Id
     @GeneratedValue
     private Long id;
@@ -59,10 +36,10 @@ public class Match implements Serializable {
     private String awayTeam;
     private Integer fullTimeHomeGoals;
     private Integer fullTimeAwayGoals;
-    private Result fullTimeResult;
+    private Character fullTimeResult;
     private Integer halfTimeHomeGoals;
     private Integer halfTimeAwayGoals;
-    private Result halfTimeResult;
+    private Character halfTimeResult;
     private String referee;
     private Integer homeTeamShots;
     private Integer awayTeamShots;
