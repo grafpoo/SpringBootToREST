@@ -29,11 +29,12 @@ public class MatchService {
 	}
 
 	@Transactional
-	public Map<String, Integer> saveAll(List<Match> matches) {
+	public Map<String, Integer> saveAll(String seasonStr, List<Match> matches) {
 		Map<String, Integer> resultsBySeason = new HashMap<>();
 		for (Match m : matches) {
+			String season = StringUtils.isEmpty(m.getSeason()) ? seasonStr : m.getSeason();
+			m.setSeason(season);
 			matchRepository.save(m);
-			String season = StringUtils.isEmpty(m.getSeason()) ? "UNKNOWN" : m.getSeason();
 			if (!resultsBySeason.containsKey(season)) {
 				resultsBySeason.put(season, 0);
 			}

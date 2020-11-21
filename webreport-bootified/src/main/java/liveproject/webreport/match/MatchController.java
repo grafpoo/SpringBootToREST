@@ -34,9 +34,9 @@ public class MatchController {
         return "reports/SeasonReport";
     }
 
-    @PostMapping("/match")
-    public String addMatches(@RequestBody List<Match> matches, Model model) {
-        Map<String, Integer> counts = matchService.saveAll(matches);
+    @PostMapping("/match/{season}")
+    public String addMatches(@PathVariable String season, @RequestBody List<Match> matches, Model model) {
+        Map<String, Integer> counts = matchService.saveAll(season, matches);
         int totalCount = counts.values().stream()
                 .mapToInt(i -> i) // this unboxes
                 .sum();
