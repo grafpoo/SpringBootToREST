@@ -1,0 +1,27 @@
+server:
+  port: 12080
+
+spring:
+  datasource:
+    url: jdbc:h2:~/epl-test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,env,flyway,health,beans,prometheus
+  endpoint:
+    health:
+      show-details: always
+    beans:
+      enabled: true
+
+testdata:
+  loadfile: classpath:epl2019-2020.json
+  season: 2019-2020
