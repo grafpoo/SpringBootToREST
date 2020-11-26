@@ -32,10 +32,12 @@ table, td, th {
 th {
     text-align: inherit;
     font-weight: bold;
+    border: #53B97E 1px;
 }
 
 td {
     border-top: 2px solid #c8c8c8;
+    border: #53B97E 1px;
 }
 
 form {

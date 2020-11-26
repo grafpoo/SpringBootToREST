@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>Matches Detail Report</title>
     <link href="../../css/main.css" rel="stylesheet" media="screen" th:href="@{/resources/css/main.css}" />
+    <!-- Start Styles. Move the 'style' tags and everything between them to between the 'head' tags -->
+    <style type="text/css">
+        .myTable { background-color:#eee;border-collapse:collapse; }
+        .myTable th { background-color:darkgreen;color:white;width:50%; }
+        .myTable td, .myTable th { padding:5px;border:1px solid #000; }
+    </style>
+    <!-- End Styles -->
 </head>
 <body>
 
@@ -11,7 +18,7 @@
     <h1>Matches played: <span th:text="${totalCount}"></span></h1>
     <p></p>
     <h2>Matches</h2>
-    <table>
+    <table class="myTable">
         <tr>
             <th>gameDate</th>
             <th>gameTime</th>

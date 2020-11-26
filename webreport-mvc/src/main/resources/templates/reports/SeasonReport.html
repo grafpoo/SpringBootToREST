@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Season Report</title>
-    <link href="../../css/main.css" rel="stylesheet" media="screen" th:href="@{/resources/css/main.css}" />
+    <style type="text/css">
+        .myTable { background-color:#eee;border-collapse:collapse; }
+        .myTable th { background-color:darkgreen;color:white;width:50%; }
+        .myTable td, .myTable th { padding:5px;border:1px solid #000; }
+    </style>
 </head>
 <body>
 
 <div>
     <h1>Final Standings for <span th:text="${season.getSeason()}"></span></h1>
-    <table>
+    <table class="myTable">
         <thead>
         <tr>
             <th scope="col">Team</th>
@@ -31,7 +35,7 @@
 <p>
 <div>
     <h3>Other Statistics</h3>
-    <table>
+    <table class="myTable">
         <tbody>
         <tr>
             <th>Home Wins</th>
@@ -57,7 +61,7 @@
 
 <div>
     <h1>Statistics for Referees</h1>
-    <table>
+    <table class="myTable">
         <thead>
         <tr>
             <th scope="col">Referee</th>

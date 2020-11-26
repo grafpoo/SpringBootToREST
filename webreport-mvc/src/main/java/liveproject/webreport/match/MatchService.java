@@ -124,9 +124,6 @@ public class MatchService {
 	}
 
 	private void addResults(Map<String, Integer> played, Map<String, Integer> points, Map<String, Integer> goalDiff, String team, int diff) {
-		if ("Watford".equals(team)) {
-			log.info("WATFORD update");
-		}
 		// verify team exists in maps
 		if (!played.containsKey(team)) {
 			played.put(team, 0);
@@ -138,9 +135,6 @@ public class MatchService {
 			goalDiff.put(team, 0);
 		}
 		played.put(team, 1+played.get(team));
-		if ("Watford".equals(team)) {
-			log.info(String.format("WATFORD played now: %s", played.get(team)));
-		}
 		if (diff < 0) {
 			// no points for you
 		} else if (diff > 0) {
@@ -150,13 +144,7 @@ public class MatchService {
 			// a draw
 			points.put(team, 1+points.get(team));
 		}
-		if ("Watford".equals(team)) {
-			log.info(String.format("WATFORD points now: %s", points.get(team)));
-		}
 		goalDiff.put(team, diff+goalDiff.get(team));
-		if ("Watford".equals(team)) {
-			log.info(String.format("WATFORD goal-diff now: %s", goalDiff.get(team)));
-		}
 	}
 
 }
