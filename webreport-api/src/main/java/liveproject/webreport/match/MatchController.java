@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 //@RequestMapping("/reports")
@@ -29,9 +30,21 @@ public class MatchController {
 
     @GetMapping("season-report/{season}")
     @ResponseStatus(value = HttpStatus.OK)
-    public String account(@PathVariable("season") String season, Model model) {
+    public String seasonReport(@PathVariable("season") String season, Model model) {
         model.addAttribute("season", matchService.aggregateSeason(season));
         return "reports/SeasonReport";
+    }
+
+    @GetMapping("matches-report/{season}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String matchesReport(@PathVariable("season") String season, Model model) {
+        Set<Match> seasonSorted = matchService.getAllBySeasonSorted(season);
+        int totalCount = seasonSorted.stream()
+                .mapToInt(i -> 1) // this unboxes
+                .sum();
+        model.addAttribute("matchesCounts", totalCount);
+        model.addAttribute("matches", seasonSorted);
+        return "reports/MatchesReport";
     }
 
     @PostMapping("/match/{season}")

@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Log
 @Service
@@ -41,6 +44,15 @@ public class MatchService {
 			resultsBySeason.put(season, 1+resultsBySeason.get(season));
 		}
 		return resultsBySeason;
+	}
+
+	public Set<Match> getAllBySeasonSorted(String seasonStr) {
+		List<Match> matches = matchRepository.findBySeason(seasonStr);
+		SortedSet<Match> sortedMatches = new TreeSet<>();
+		for (Match m : matches) {
+			sortedMatches.add(m);
+		}
+		return sortedMatches;
 	}
 
 	public Season aggregateSeason(String seasonStr) {

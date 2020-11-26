@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:~/epl-test
+    url: jdbc:h2:~/epl-rest-db
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -15,13 +15,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: info,env,flyway,health,beans,prometheus
+        include: info,env,health,beans
   endpoint:
     health:
       show-details: always
     beans:
       enabled: true
-
-testdata:
-  loadfile: classpath:epl2019-2020.json
-  season: 2019-2020
