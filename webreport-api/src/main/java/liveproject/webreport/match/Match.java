@@ -75,13 +75,22 @@ public class Match implements Serializable, Comparable {
     public int compareTo(Object o) {
         if (! (o instanceof Match)) return 1;
         Match omatch = (Match) o;
-        int dateCompare = gameDate.compareTo(omatch.gameDate);
-        if (dateCompare != 0) return dateCompare;
-        if (gameTime == null) {
-            return (omatch.gameTime == null) ? 0 : -1;
+        if (gameDate == null) {
+            // if mine is null and other isn't, i come after
+            if (omatch.gameDate != null) return 1;
+        } else {
+            if (omatch.gameDate == null) return -1;
+            int dateCompare = gameDate.compareTo(omatch.gameDate);
+            if (dateCompare != 0) return dateCompare;
         }
-        int timeCompare = gameTime.compareTo(omatch.gameTime);
-        if (timeCompare != 0) return timeCompare;
+        if (gameTime == null) {
+            // if mine is null and other isn't, i come after
+            if (omatch.gameTime != null) return 1;
+        } else {
+            if (omatch.gameTime == null) return -1;
+            int timeCompare = gameTime.compareTo(omatch.gameTime);
+            if (timeCompare != 0) return timeCompare;
+        }
         return homeTeam.compareTo(omatch.homeTeam);
     }
 }

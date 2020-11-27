@@ -49,9 +49,7 @@ public class MatchService {
 	public Set<Match> getAllBySeasonSorted(String seasonStr) {
 		List<Match> matches = matchRepository.findBySeason(seasonStr);
 		SortedSet<Match> sortedMatches = new TreeSet<>();
-		for (Match m : matches) {
-			sortedMatches.add(m);
-		}
+		sortedMatches.addAll(matches);
 		return sortedMatches;
 	}
 
