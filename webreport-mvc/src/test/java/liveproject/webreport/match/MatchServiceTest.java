@@ -30,10 +30,13 @@ public class MatchServiceTest {
     private MatchService matchService;
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.dd.MM");
 
+    private Match theFirstGame;
+    private Match theSecondGame;
+
     @BeforeEach
     public void setup() throws ParseException {
         matchService = new MatchService(matchRepository);
-        Match theFirstGame = Match.builder()
+        theFirstGame = Match.builder()
                 .id(1L)
                 .gameDate(sdf.parse("1910.15.08"))
                 .awayTeam(MANCHESTER_UNITED)
@@ -46,7 +49,7 @@ public class MatchServiceTest {
                 .fullTimeResult('H')
                 .season(SEASON_STR)
                 .build();
-        Match theSecondGame = Match.builder()
+        theSecondGame = Match.builder()
                 .id(1L)
                 .gameDate(sdf.parse("1910.18.08"))
                 .awayTeam(LIVERPOOL)
@@ -75,10 +78,23 @@ public class MatchServiceTest {
     }
 
     @Test
-    public void test_getMatches() {
+    public void test_getMatches_normal() {
         Set<Match> matches = matchService.getAllBySeasonSorted(SEASON_STR);
         assertThat(matches.size()).isEqualTo(2);
         Match match = (Match)(matches.toArray()[0]);
         assertThat(match.getHomeTeam()).isEqualTo(LEEDS_UNITED);
+    }
+
+    @Test
+    public void test_getMatches_sameDay() throws ParseException {
+        Date date = sdf.parse("1910.15.08");
+        theFirstGame.setGameDate(date);
+        theFirstGame.setGameTime("1230");
+        theSecondGame.setGameDate(date);
+        theSecondGame.setGameTime("1100");
+        Set<Match> matches = matchService.getAllBySeasonSorted(SEASON_STR);
+        assertThat(matches.size()).isEqualTo(2);
+        Match match = (Match)(matches.toArray()[0]);
+        assertThat(match.getHomeTeam()).isEqualTo(ASTON_VILLA);
     }
 }
