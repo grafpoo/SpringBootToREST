@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,27 +45,25 @@ public class MatchControllerTest {
   public void find_shouldAddSeasonToModelAndRenderSeasonReportView() throws Exception {
     mockMvc.perform(get("/season-report/"+SEASON_STR))
             .andExpect(status().isOk())
-            .andExpect(view().name("reports/SeasonReport"))
-            .andExpect(forwardedUrl("reports/SeasonReport"))
-            .andExpect(model().attribute("season", hasProperty("season", is(SEASON_STR))));
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().json("{}"));
   }
 
   @Test
   public void find_shouldAddMatchesToModelAndRenderMatchReportView() throws Exception {
     mockMvc.perform(get("/matches-report/"+SEASON_STR))
             .andExpect(status().isOk())
-            .andExpect(view().name("reports/MatchesReport"))
-            .andExpect(forwardedUrl("reports/MatchesReport"))
-            .andExpect(model().attribute("matches", instanceOf(Set.class)));
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().json("[]"));
   }
 
   @Test
-  public void find_shouldLoadAndRenderSeasonReportView() throws Exception {
+  public void load_shouldLoadAndRenderSeasonReportView() throws Exception {
     mockMvc.perform(post("/match/"+SEASON_STR)
             .content("[]")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(view().name("reports/LoadReport"))
-            .andExpect(forwardedUrl("reports/LoadReport"));
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().json("0"));
   }
 }

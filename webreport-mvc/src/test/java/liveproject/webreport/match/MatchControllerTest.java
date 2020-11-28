@@ -59,7 +59,7 @@ public class MatchControllerTest {
   }
 
   @Test
-  public void find_shouldLoadAndRenderSeasonReportView() throws Exception {
+  public void load_shouldLoadAndRenderSeasonReportView() throws Exception {
     mockMvc.perform(post("/match/"+SEASON_STR)
             .content("[]")
             .contentType(MediaType.APPLICATION_JSON))
