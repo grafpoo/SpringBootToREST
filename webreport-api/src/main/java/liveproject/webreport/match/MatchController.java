@@ -3,6 +3,7 @@ package liveproject.webreport.match;
 import liveproject.webreport.season.Season;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,18 +31,21 @@ public class MatchController {
     }
 
     @GetMapping("season-report/{season}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public Season seasonReport(@PathVariable("season") String season, Model model) {
-        return matchService.aggregateSeason(season);
+    public ResponseEntity<Season> seasonReport(@PathVariable("season") String seasonStr, Model model) {
+        Season season = matchService.aggregateSeason(seasonStr);
+        HttpStatus status = season.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+        return ResponseEntity.status(status).body(season);
     }
 
     @GetMapping("matches-report/{season}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public Set<Match> matchesReport(@PathVariable("season") String season, Model model) {
-        return matchService.getAllBySeasonSorted(season);
+    public ResponseEntity<Set<Match>> matchesReport(@PathVariable("season") String season, Model model) {
+        Set<Match> matches = matchService.getAllBySeasonSorted(season);
+        HttpStatus status = matches.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+        return ResponseEntity.status(status).body(matches);
     }
 
     @PostMapping("/match/{season}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Integer addMatches(@PathVariable String season, @RequestBody List<Match> matches, Model model) {
         Map<String, Integer> counts = matchService.saveAll(season, matches);
         int totalCount = counts.values().stream()

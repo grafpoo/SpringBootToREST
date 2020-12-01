@@ -52,6 +52,10 @@ public class Season {
         return refereeResults;
     }
 
+    public boolean isEmpty() {
+        return (teamResults == null) || teamResults.isEmpty();
+    }
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
