@@ -1,6 +1,7 @@
 package liveproject.webreport.match;
 
 import liveproject.webreport.season.Season;
+import liveproject.webreport.season.SeasonsList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +30,13 @@ public class MatchController {
     @Autowired
     public MatchController(MatchService matchService) {
         this.matchService = matchService;
+    }
+
+    @GetMapping("season")
+    public ResponseEntity<SeasonsList> getAllSeasons() {
+        List<String> seasons = matchService.getAllSeasons();
+        HttpStatus status = seasons.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+        return ResponseEntity.status(status).body(new SeasonsList(seasons));
     }
 
     @GetMapping("season-report/{season}")
